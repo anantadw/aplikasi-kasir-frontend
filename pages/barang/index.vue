@@ -29,8 +29,7 @@
             <td class="">{{ brg.harga }}</td>
             <td class="">
               <button type="button" id="modalButton" class="bg-cyan-400 px-4 py-2 rounded-lg font-medium hover:bg-cyan-300 active:bg-cyan-500 transition duration-150 me-2" v-on:click="getDetailBarang(brg.id)">Detail</button>
-              <NuxtLink v-bind:to="`/barang/edit-${brg.id}`"
-                  class="bg-yellow-300 px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 active:bg-yellow-500 me-2 transition duration-150">Ubah</NuxtLink>
+              <NuxtLink v-bind:to="`/barang/edit-${brg.id}`" class="bg-yellow-300 px-4 py-2 rounded-lg font-medium hover:bg-yellow-400 active:bg-yellow-500 me-2 transition duration-150">Ubah</NuxtLink>
               <button type="button"
                   class="bg-red-600 px-4 py-2 rounded-lg font-medium hover:bg-red-500 active:bg-red-700 transition duration-150" v-on:click="deleteBarang(brg.id, brg.nama)">Hapus</button>
             </td>
@@ -42,7 +41,7 @@
       </table>
     </div>
   </div>
-  <ModalDetail id="modalDetail" title="Detail" v-bind:modal="modal">
+  <ModalComponent id="modalDetail" title="Detail" v-bind:modal="modal">
     <div v-if="isModalLoading" class="p-8 text-center">
       <div role="status" class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center">
         <div class="flex items-center justify-center w-full h-48 bg-gray-300 rounded sm:w-96 dark:bg-gray-700">
@@ -88,23 +87,24 @@
             </li>
             <li class="w-full px-4 py-2 border-b border-gray-200 flex justify-between">
               <span>Ditambahkan pada:</span>
-              <span>{{ detailBarang.created_at }}</span>
+              <span>{{ moment(detailBarang.created_at).format('DD MMMM YYYY hh:mm:ss') }}</span>
             </li>
             <li class="w-full px-4 py-2 rounded-b-lg flex justify-between">
               <span>Diperbarui pada:</span>
-              <span>{{ detailBarang.updated_at }}</span>
+              <span>{{ moment(detailBarang.updated_at).format('DD MMMM YYYY hh:mm:ss') }}</span>
             </li>
           </ul>
         </div>
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-  </ModalDetail>
+  </ModalComponent>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
 import { Modal } from 'flowbite'
+import moment from 'moment'
 
 useHead({
   title: 'Data Barang'
